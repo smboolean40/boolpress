@@ -3,7 +3,7 @@
 @section('pageContent')
 	<div class="row">
 	<div class="col-md-8 blog-main">
-
+		<h1>Chi sono</h1>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur maxime doloremque repudiandae laudantium placeat repellat in praesentium, accusamus consectetur laboriosam, mollitia possimus obcaecati deserunt doloribus rerum repellendus maiores consequatur blanditiis?
 
 	</div><!-- /.blog-main -->

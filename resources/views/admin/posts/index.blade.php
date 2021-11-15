@@ -33,11 +33,12 @@
 									<a href="{{route("admin.posts.show", $post["id"])}}">
 										<button type="button" class="btn btn-primary">Visualizza</button>
 									</a>
-									<form action="{{route("admin.posts.destroy", $post["id"])}}" method="POST">
-										@csrf
-										@method("DELETE")
-										<button type="submit" class="btn btn-danger">Elimina</button>
-									</form>
+									<a href="{{route("admin.posts.edit",  $post["id"])}}">
+										<button type="button" class="btn btn-warning">Modifica</button>
+									</a>
+									<button type="button" class="btn btn-danger btn-delete" data-id="{{$post["id"]}}" data-toggle="modal" data-target="#deleteModal">
+										Elimina
+									</button>
 								</td>
 							</tr>
 							@endforeach
@@ -47,5 +48,31 @@
             </div>
         </div>
     </div>
+</div>
+  
+<!-- Modal -->
+<div class="modal fade" id="deleteModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Conferma cancellazione Post</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<form action="{{route("admin.posts.destroy", 'id')}}" method="POST">
+			@csrf
+			@method("DELETE")
+			<input type="hidden" id="delete-id" name="id">
+			<div class="modal-body">
+				Sei sicuro di voler cancellare il post?
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">Si</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+			</div>
+		</form>
+		</div>
+	</div>
 </div>
 @endsection
