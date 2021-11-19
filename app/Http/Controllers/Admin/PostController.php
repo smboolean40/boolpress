@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -25,7 +26,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $user = Auth::user();
+
+        $posts = $user['posts'];
 
         return view("admin.posts.index", compact("posts"));
     }
@@ -59,6 +62,8 @@ class PostController extends Controller
        
         $newPost->slug = $this->getSlug($request->title);
 
+        $newPost->user_id = Auth::id();
+
         $newPost->save();
 
         $newPost->tags()->attach($request["tags"]);
@@ -74,6 +79,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        if( $post->user_id != Auth::id() ) {
+            abort("403");
+        }
+
         return view("admin.posts.show", compact("post"));
     }
 
@@ -85,6 +94,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if( $post->user_id != Auth::id() ) {
+            abort("403");
+        }
+
         $categories = Category::all();
         $tags = Tag::all();
 
@@ -100,6 +113,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if( $post->user_id != Auth::id() ) {
+            abort("403");
+        }
+        
         //validations
         $request->validate($this->validationRules);
 
@@ -125,6 +142,10 @@ class PostController extends Controller
     public function destroy(Request $request)
     {
         $post = Post::find($request->id);
+
+        if( $post->user_id != Auth::id() ) {
+            abort("403");
+        }
         
         $post->delete();
 
