@@ -18,35 +18,25 @@
 						<thead>
 						  <tr>
 							<th scope="col">#</th>
-							<th scope="col">Title</th>
+							<th scope="col">Name</th>
 							<th scope="col">Slug</th>
-							<th scope="col">Category</th>
-							<th scope="col">tags</th>
 							<th scope="col">Action</th>
 						  </tr>
 						</thead>
 						<tbody>
-							@foreach ($posts as $post)
+							@foreach ($categories as $category)
 							<tr>
-								<td>{{$post["id"]}}</td>
-								<td>{{$post["title"]}}</td>
-								<td>{{$post["slug"]}}</td>
-								<td>{{isset($post["category"]["name"]) ? $post["category"]["name"] : ""}}</td>
+								<td>{{$category["id"]}}</td>
+								<td>{{$category["name"]}}</td>
+								<td>{{$category["slug"]}}</td>
 								<td>
-									@if(count($post["tags"]) > 0)
-										@foreach ($post["tags"] as $tag)
-										<span class="badge badge-primary">{{$tag["name"]}}</span>
-										@endforeach
-									@endif
-								</td>
-								<td>
-									<a href="{{route("admin.posts.show", $post["id"])}}">
+									<a href="{{route("admin.categories.show", $category["id"])}}">
 										<button type="button" class="btn btn-primary">Visualizza</button>
 									</a>
-									<a href="{{route("admin.posts.edit",  $post["id"])}}">
+									<a href="{{route("admin.categories.edit",  $category["id"])}}">
 										<button type="button" class="btn btn-warning">Modifica</button>
 									</a>
-									<button type="button" class="btn btn-danger btn-delete" data-id="{{$post["id"]}}" data-toggle="modal" data-target="#deleteModal">
+									<button type="button" class="btn btn-danger btn-delete" data-id="{{$category["id"]}}" data-toggle="modal" data-target="#deleteModal">
 										Elimina
 									</button>
 								</td>
@@ -65,17 +55,17 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Conferma cancellazione Post</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Conferma cancellazione Categoria</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
-		<form action="{{route("admin.posts.destroy", 'id')}}" method="POST">
+		<form action="{{route("admin.categories.destroy", 'id')}}" method="POST">
 			@csrf
 			@method("DELETE")
 			<input type="hidden" id="delete-id" name="id">
 			<div class="modal-body">
-				Sei sicuro di voler cancellare il post?
+				Sei sicuro di voler cancellare questa categoria?
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-primary">Si</button>
