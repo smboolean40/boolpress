@@ -20,6 +20,7 @@ Route::get('/contatti', 'PageController@contact')->name("contact");
 Route::get('/blog', 'PostController@index')->name("posts.index");
 Route::get('/blog/{slug}', 'PostController@show')->name("posts.show");
 Route::get('/blog/category/{slug}', 'CategoryController@show')->name("categories.show");
+Route::get('/api-posts', 'PageController@apiPosts')->name("posts.api");
 
 // Rotte Autenticazione
 Auth::routes();

@@ -20,4 +20,9 @@ class PageController extends Controller
     {
         return view("guest.contact");
     }
+
+    public function apiPosts()
+    {
+        return view("guest.api");
+    }
 }
